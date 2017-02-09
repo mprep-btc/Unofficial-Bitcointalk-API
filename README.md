@@ -1,6 +1,13 @@
 # Unofficial Bitcointalk API
-C# / .NET library for fetching Bitcointalk.org boards, topics and posts
+C# / .NET library for fetching Bitcointalk.org boards, topics and posts.
 
+# Features
+* Fetch topics from board pages and posts from topic pages or the "Recent Posts" page.
+* Get post's message\*, URL, title, number in topic, creation date, author's username and profile link.
+* Quickly fetch post messages from the entire topic (other data will require additional fetching).
+* Fully commented code for developing extensions / different versions.
+
+<sub>\* The message is stripped of [code] fields, quotes, images, links (as in <a href></a>), smileys (replaced with ',' character) and new lines / line breaks. Feel free to create your own modification.</sub>
 ## Usage examples
 
 #### Print out all posts from a single topic page
