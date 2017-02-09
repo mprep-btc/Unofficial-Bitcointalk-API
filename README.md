@@ -80,7 +80,7 @@ foreach (Topic topic in allTopics)
 * .NET Framework 4.6.1 (may work with an older version, though untested).
 
 ## License
-The project's files (except for the ones belonging to the HTML Agility Pack (HTMLAgilityPack.dll and HTMLAgilityPack.xml) in the Binaries folder and subfolders) are licensed under the [AGPL 3.0 license](https://github.com/mprep-btc/Bitcointalk-Post-Iconizer/blob/master/LICENSE).
+The project's files (except for the ones belonging to the HTML Agility Pack (HTMLAgilityPack.dll and HTMLAgilityPack.xml) in the Binaries folder and subfolders) are licensed under the [AGPL 3.0 license](LICENSE).
 
 ## Major changes
 
