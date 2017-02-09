@@ -93,7 +93,6 @@ namespace BitcointalkAPI
         /// <param name="boardPage">The first board page from which to collect the topics/threads (not less than 1)</param>
         /// <param name="pagesToScan">Number of Bitcointalk board pages to scan</param>
         /// <param name="token">Cancellation token, used for ceasing the continued execution of the method</param>
-        /// <param name="token">Cancellation token, used for ceasing the continued execution of the method</param>
         /// <returns>A collection of topics/threads</returns>
         public async Task<ICollection<Topic>> GetTopicsAsync(int boardPage, int pagesToScan = 1, CancellationToken token = default(CancellationToken))
         {
@@ -283,12 +282,15 @@ namespace BitcointalkAPI
         /// Settings for fetching web pages within the Topic object
         /// </summary>
         public WebConfig webSettings;
+        /// <summary>
+        /// Text used to replace all smiley emoticons in posts found within the topic.
+        /// </summary>
+        public string smileyReplacer = ",";
 
         /// <summary>
         /// A cache of all posts belonging to the Topic that have been fetched
         /// </summary>
         protected Dictionary<int, Post[]> postsIndexed = new Dictionary<int, Post[]>();
-
         /// <summary>
         /// The Id of the topic
         /// </summary>
@@ -553,7 +555,7 @@ namespace BitcointalkAPI
                     throw new BitcointalkConnectionException("Could not retrieve all posts (might not be possible)", typeof(Topic));
                 }
 
-                ICollection<Post> allPosts = topicPageParser.ParseTopicPage(html);
+                ICollection<Post> allPosts = topicPageParser.ParseTopicPage(html, smileyReplacer);
 
                 //TO DO: NEEDS TESTING
                 foreach (Post post in allPosts)
@@ -691,7 +693,7 @@ namespace BitcointalkAPI
                 html = downloader.DownloadString(topicURL);
             }
 
-            return topicPageParser.ParseTopicPage(html);
+            return topicPageParser.ParseTopicPage(html, smileyReplacer);
         }
 
         /// <summary>
@@ -714,6 +716,10 @@ namespace BitcointalkAPI
         /// </summary>
         public WebConfig webSettings;
         /// <summary>
+        /// Text to replace all smiley emoticons in the post with
+        /// </summary>
+        public string smileyReplacer = ",";
+        /// <summary>
         /// The link to the post author's profile
         /// </summary>
         protected string authorLink;
@@ -735,7 +741,7 @@ namespace BitcointalkAPI
         protected DateTime date;
         /// <summary>
         /// The contents of the post 
-        /// (that are stripped of code fields, quotes, images, links (as in <a href></a>), smileys (replaced with the selected character) and new lines / line breaks)
+        /// (that are stripped of code fields, quotes, images, links (as in URLs), smileys (replaced with the selected character) and new lines / line breaks)
         /// </summary>
         protected string contents;
         /// <summary>
@@ -1054,7 +1060,7 @@ namespace BitcointalkAPI
                     html = downloader.DownloadString(Link);
                 }
                 await Task.Delay(webSettings.requestDelay);
-                IEnumerable<Post> allPosts = postParser.ParseTopicPage(html);
+                IEnumerable<Post> allPosts = postParser.ParseTopicPage(html, smileyReplacer);
                 foreach (Post post in allPosts)
                 {
                     if (post == this)
@@ -1228,8 +1234,9 @@ namespace BitcointalkAPI
         /// Parse a regular topic / thread page
         /// </summary>
         /// <param name="html">The HTML code of the topic / thread page</param>
+        /// <param name="smileyReplacer">Text to replace all the smiley emoticons with</param>
         /// <returns>A collection of posts from the parsed topic</returns>
-        public ICollection<Post> ParseTopicPage(string html)
+        public ICollection<Post> ParseTopicPage(string html, string smileyReplacer = ",")
         {
 
             HashSet<Post> postList = new HashSet<Post>();
@@ -1244,7 +1251,7 @@ namespace BitcointalkAPI
                 MatchCollection allSmileys = Regex.Matches(html, @"<img src=""https://bitcointalk\.org/Smileys/default/[a-z\s]+\.gif"" alt=""[a-zA-Z\s]+"" border=""0"" />");
                 foreach (Match smileyMatch in allSmileys)
                 {
-                    html = html.Replace(smileyMatch.Value, ",");
+                    html = html.Replace(smileyMatch.Value, smileyReplacer);
                 }
 
 
@@ -1481,8 +1488,9 @@ namespace BitcointalkAPI
         /// Parse the "Recent Posts" page
         /// </summary>
         /// <param name="html">The HTML code of the "Recent Posts" page</param>
+        /// <param name="smileyReplacer">Text to replace all the smiley emoticons with</param>
         /// <returns></returns>
-        public ICollection<Post> ParseRecentPage(string html)
+        public ICollection<Post> ParseRecentPage(string html, string smileyReplacer = ",")
         {
             HashSet<Post> postList = new HashSet<Post>();
             HtmlDocument parsedHtml = new HtmlDocument();
@@ -1493,7 +1501,7 @@ namespace BitcointalkAPI
             MatchCollection allSmileys = Regex.Matches(html, @"<img src=""https://bitcointalk\.org/Smileys/default/[a-z\s]+\.gif"" alt=""[a-zA-Z\s]+"" border=""0"" />");
             foreach (Match smileyMatch in allSmileys)
             {
-                html = html.Replace(smileyMatch.Value, ",");
+                html = html.Replace(smileyMatch.Value, smileyReplacer);
             }
 
 
