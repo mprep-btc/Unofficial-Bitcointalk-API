@@ -3,7 +3,7 @@ C# / .NET library for fetching Bitcointalk.org boards, topics and posts.
 
 # Features
 * Fetch topics from board pages and posts from topic pages or the "Recent Posts" page.
-* Get post's message\*, URL, title, number in topic, creation date, author's username and profile link.
+* Get post's message<sup>\*</sup>, URL, title, number in topic, creation date, author's username and profile link.
 * Quickly fetch post messages from the entire topic (other data will require additional fetching).
 * Fully commented code for developing extensions / different versions.
 
