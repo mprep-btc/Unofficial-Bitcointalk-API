@@ -1,0 +1,619 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BitcointalkAPI</name>
+    </assembly>
+    <members>
+        <member name="T:BitcointalkAPI.Board">
+            <summary>
+            Bitcointalk board
+            </summary>
+        </member>
+        <member name="F:BitcointalkAPI.Board.webSettings">
+            <summary>
+            Settings for fetching web pages within the Board object
+            </summary>
+        </member>
+        <member name="E:BitcointalkAPI.Board.PageScanned">
+            <summary>
+            Event, called every time a Bitcointalk board page is processed
+            </summary>
+        </member>
+        <member name="E:BitcointalkAPI.Board.ScanFailure">
+            <summary>
+            Event, called when the processing of a Bitcointalk board page fails
+            </summary>
+        </member>
+        <member name="F:BitcointalkAPI.Board.boardId">
+            <summary>
+            The ID of the Bitcointalk board
+            </summary>
+        </member>
+        <member name="F:BitcointalkAPI.Board.boardPrefix">
+            <summary>
+            Constant for constructing the full link to the Bitcointalk board
+            </summary>
+        </member>
+        <member name="F:BitcointalkAPI.Board.boardPostfix">
+            <summary>
+            Constant for constructing the full link to the Bitcointalk board
+            </summary>
+        </member>
+        <member name="F:BitcointalkAPI.Board.restartLimit">
+            <summary>
+            Number of times the Board object will attempt to fetch a Bitcointalk page
+            </summary>
+        </member>
+        <member name="P:BitcointalkAPI.Board.Link">
+            <summary>
+            URL to the Bitcointalk board's first page
+            </summary>
+        </member>
+        <member name="M:BitcointalkAPI.Board.#ctor(System.String,BitcointalkAPI.Utilities.WebConfig)">
+            <summary>
+            Create a new Board objects
+            </summary>
+            <param name="boardLink">URL of the first Bitcointalk board page</param>
+            <param name="webSettings">Settings for fetching pages from Bitcointalk</param>
+        </member>
+        <member name="M:BitcointalkAPI.Board.GetTopics(System.Int32,System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Get the topics/threads from a selected number of Bitcointalk board pages
+            </summary>
+            <param name="boardPage">The first board page from which to collect the topics/threads (not less than 1)</param>
+            <param name="pagesToScan">Number of Bitcointalk board pages to scan</param>
+            <param name="token">Cancellation token, used for ceasing the continued execution of the method</param>
+            <returns>A collection of topics/threads</returns>
+        </member>
+        <member name="M:BitcointalkAPI.Board.GetTopicsAsync(System.Int32,System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Get the topics/threads from a selected number of Bitcointalk board pages asynchronously 
+            </summary>
+            <param name="boardPage">The first board page from which to collect the topics/threads (not less than 1)</param>
+            <param name="pagesToScan">Number of Bitcointalk board pages to scan</param>
+            <param name="token">Cancellation token, used for ceasing the continued execution of the method</param>
+            <returns>A collection of topics/threads</returns>
+        </member>
+        <member name="M:BitcointalkAPI.Board.ScanBoardPage(System.Int32)">
+            <summary>
+            Scan a selected board page for topics
+            </summary>
+            <param name="currentPage">The board page to scan (starting with 1)</param>
+            <returns>A collection of topics/threads</returns>
+        </member>
+        <member name="T:BitcointalkAPI.Topic">
+            <summary>
+            Bitcointalk topic / thread
+            </summary>
+        </member>
+        <member name="F:BitcointalkAPI.Topic.maxPages">
+            <summary>
+            Number of pages the topic / thread has
+            </summary>
+        </member>
+        <member name="E:BitcointalkAPI.Topic.PageScanned">
+            <summary>
+            Event, called whenever a topic / thread page is processed
+            </summary>
+        </member>
+        <member name="E:BitcointalkAPI.Topic.ScanFailure">
+            <summary>
+            Event, called whenever the processing of a topic / thread page fails
+            </summary>
+        </member>
+        <member name="F:BitcointalkAPI.Topic.webSettings">
+            <summary>
+            Settings for fetching web pages within the Topic object
+            </summary>
+        </member>
+        <member name="F:BitcointalkAPI.Topic.smileyReplacer">
+            <summary>
+            Text used to replace all smiley emoticons in posts found within the topic.
+            </summary>
+        </member>
+        <member name="F:BitcointalkAPI.Topic.postsIndexed">
+            <summary>
+            A cache of all posts belonging to the Topic that have been fetched
+            </summary>
+        </member>
+        <member name="F:BitcointalkAPI.Topic.topicID">
+            <summary>
+            The Id of the topic
+            </summary>
+        </member>
+        <member name="F:BitcointalkAPI.Topic.hasAllPosts">
+            <summary>
+            Indicates whether the cache contains all posts within the topic (works when fetched using the 'all posts' or 'print' function)
+            </summary>
+        </member>
+        <member name="F:BitcointalkAPI.Topic.canUseAllFunction">
+            <summary>
+            Indicates whether it's possible to fetch all posts from the topic at once
+            </summary>
+        </member>
+        <member name="F:BitcointalkAPI.Topic.topicPrefix">
+            <summary>
+            Constants for constructing the topic URL
+            </summary>
+        </member>
+        <member name="F:BitcointalkAPI.Topic.topicPostFix">
+            <summary>
+            Constants for constructing the topic URL
+            </summary>
+        </member>
+        <member name="F:BitcointalkAPI.Topic.restartLimit">
+            <summary>
+            Number of times the Topic object will attempt to fetch a Bitcointalk page
+            </summary>
+        </member>
+        <member name="F:BitcointalkAPI.Topic.topicPageParser">
+            <summary>
+            The object responsible for parsing the HTML of topic pages
+            </summary>
+        </member>
+        <member name="P:BitcointalkAPI.Topic.Link">
+            <summary>
+            The URL to the topic's / thread's first page
+            </summary>
+        </member>
+        <member name="P:BitcointalkAPI.Topic.MaxPages">
+            <summary>
+            The number of pages the topic / thread has (may require Internet connection to retrieve it)
+            </summary>
+        </member>
+        <member name="P:BitcointalkAPI.Topic.ID">
+            <summary>
+            The ID of the topic / thread
+            </summary>
+        </member>
+        <member name="M:BitcointalkAPI.Topic.#ctor(System.String,BitcointalkAPI.PostParser,System.Boolean,System.Int32,BitcointalkAPI.Utilities.WebConfig)">
+            <summary>
+            Forced creation of a Topic (make sure the paramaters are valid)
+            </summary>
+            <param name="topicLink">URL to the topic's page (any)</param>
+            <param name="postParser">The object responsible for parsing the topic's HTML pages</param>
+            <param name="canUseAllFunction">Can the topic use the 'all pages' function</param>
+            <param name="maxPages">The number of pages the topic has</param>
+            <param name="webSettings">The settings for fetching web pages</param>
+        </member>
+        <member name="M:BitcointalkAPI.Topic.#ctor(System.String,BitcointalkAPI.Utilities.WebConfig,BitcointalkAPI.PostParser)">
+            <summary>
+            Create a new Topic object
+            </summary>
+            <param name="topicLink">URL to the topic's / thread's page (any)</param>
+            <param name="webSettings">The settings for fetching web pages</param>
+            <param name="postParser">The object responsible for parsing the topic's / thread's HTML pages</param>
+        </member>
+        <member name="M:BitcointalkAPI.Topic.GetPosts(System.Int32,System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Get posts from a selected number of topic / thread pages
+            </summary>
+            <param name="topicPage">The page number of the first page you want posts from (starting with 1)</param>
+            <param name="pagesToScan">The number of pages you want to collect</param>
+            <param name="cancelToken">Cancellation token, used for ceasing the continued execution of the method</param>
+            <returns>A collection of posts from the selected number of pages</returns>
+        </member>
+        <member name="M:BitcointalkAPI.Topic.GetPostsAsync(System.Int32,System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Get posts from a selected number of topic / thread pages asynchronously
+            </summary>
+            <param name="topicPage">The page number of the first page you want posts from (starting with 1)</param>
+            <param name="pagesToScan">The number of pages you want to collect</param>
+            <param name="cancelToken">Cancellation token, used for ceasing the continued execution of the method</param>
+            <returns>A collection of posts from the selected number of pages</returns>
+        </member>
+        <member name="M:BitcointalkAPI.Topic.GetAllPosts(System.Boolean,System.Threading.CancellationToken)">
+            <summary>
+            Get all posts from the topic
+            </summary>
+            <param name="getFullDetails">Should the method collect all information about the posts (may take time but all posts will contain all information about them)?</param>
+            <param name="cancelToken">Cancellation token, used for ceasing the continued execution of the method</param>
+            <returns>A collection of all the topic's / thread's posts</returns>
+        </member>
+        <member name="M:BitcointalkAPI.Topic.GetAllPostsAsync(System.Boolean,System.Threading.CancellationToken)">
+            <summary>
+            Get all posts from the topic
+            </summary>
+            <param name="getFullDetails">Should the method collect all information about the posts (may take time but all posts will contain all information about them)?</param>
+            <param name="cancelToken">Cancellation token, used for ceasing the continued execution of the method</param>
+            <returns>A collection of all the topic's / thread's posts</returns>
+        </member>
+        <member name="M:BitcointalkAPI.Topic.Copy">
+            <summary>
+            Perform a deep copy of the Topic object
+            </summary>
+            <returns>The selected Topic object's copy</returns>
+        </member>
+        <member name="M:BitcointalkAPI.Topic.GetMaxPages">
+            <summary>
+            Fetches the number of pages the topic / thread has
+            </summary>
+        </member>
+        <member name="M:BitcointalkAPI.Topic.ScanTopicPage(System.Int32)">
+            <summary>
+            Scans a single topic / thread page
+            </summary>
+            <param name="currentPage">Page number of the page the posts should be collected from</param>
+            <returns>A collection of posts from the selected page</returns>
+        </member>
+        <member name="M:BitcointalkAPI.Topic.ClearCache">
+            <summary>
+            Clear all store posts within the Topic object's cache
+            </summary>
+        </member>
+        <member name="T:BitcointalkAPI.Post">
+            <summary>
+            Bitcointalk post
+            </summary>
+        </member>
+        <member name="F:BitcointalkAPI.Post.webSettings">
+            <summary>
+            Settings for fetching web pages within the Post object
+            </summary>
+        </member>
+        <member name="F:BitcointalkAPI.Post.smileyReplacer">
+            <summary>
+            Text to replace all smiley emoticons in the post with
+            </summary>
+        </member>
+        <member name="F:BitcointalkAPI.Post.authorLink">
+            <summary>
+            The link to the post author's profile
+            </summary>
+        </member>
+        <member name="F:BitcointalkAPI.Post.authorName">
+            <summary>
+            The post author's username
+            </summary>
+        </member>
+        <member name="F:BitcointalkAPI.Post.title">
+            <summary>
+            The post's title
+            </summary>
+        </member>
+        <member name="F:BitcointalkAPI.Post.postNumberInTopic">
+            <summary>
+            Post's number within the topic
+            </summary>
+        </member>
+        <member name="F:BitcointalkAPI.Post.date">
+            <summary>
+            The time and date the post was created
+            </summary>
+        </member>
+        <member name="F:BitcointalkAPI.Post.contents">
+            <summary>
+            The contents of the post 
+            (that are stripped of code fields, quotes, images, links (as in URLs), smileys (replaced with the selected character) and new lines / line breaks)
+            </summary>
+        </member>
+        <member name="F:BitcointalkAPI.Post.postId">
+            <summary>
+            The ID of the post
+            </summary>
+        </member>
+        <member name="F:BitcointalkAPI.Post.topicID">
+            <summary>
+            The ID of the topic the post is in
+            </summary>
+        </member>
+        <member name="F:BitcointalkAPI.Post.preTopic">
+            <summary>
+            Constants used for creating the post's URL
+            </summary>
+        </member>
+        <member name="F:BitcointalkAPI.Post.postTopic">
+            <summary>
+            Constants used for creating the post's URL
+            </summary>
+        </member>
+        <member name="F:BitcointalkAPI.Post.postNumber">
+            <summary>
+            Constants used for creating the post's URL
+            </summary>
+        </member>
+        <member name="F:BitcointalkAPI.Post.postParser">
+            <summary>
+            The object responsible for parsing the HTML of topic pages
+            </summary>
+        </member>
+        <member name="P:BitcointalkAPI.Post.Link">
+            <summary>
+            The URL of the post (may be missing if not fetched from topic page using GetMissingDataAsync() or provided upon creation of object)
+            </summary>
+        </member>
+        <member name="P:BitcointalkAPI.Post.Message">
+            <summary>
+            The contents of the post 
+            (that are stripped of [code] fields, quotes, images, links (as in <a href='something.com'></a>), smileys (replaced with a selected character) and new lines / line breaks).
+            (if not fetched from topic page using GetMissingDataAsync())
+            </summary>
+        </member>
+        <member name="P:BitcointalkAPI.Post.AuthorLink">
+            <summary>
+            The link to the post author's profile (may be missing if not fetched from topic page using GetMissingDataAsync())
+            </summary>
+        </member>
+        <member name="P:BitcointalkAPI.Post.AuthorName">
+            <summary>
+            The post author's username (may be missing if not fetched from topic page using GetMissingDataAsync())
+            </summary>
+        </member>
+        <member name="P:BitcointalkAPI.Post.Title">
+            <summary>
+            The post's title (may be missing if not fetched from topic page using GetMissingDataAsync())
+            </summary>
+        </member>
+        <member name="P:BitcointalkAPI.Post.NumberInTopic">
+            <summary>
+            Post's number within the topic (may be missing if not fetched from topic page using GetMissingDataAsync() or provided upon creation of object)
+            </summary>
+        </member>
+        <member name="P:BitcointalkAPI.Post.Date">
+            <summary>
+            The time and date the post was created (may be missing if not fetched from topic page using GetMissingDataAsync())
+            </summary>
+        </member>
+        <member name="P:BitcointalkAPI.Post.TopicLinkUnfinished">
+            <summary>
+            The unfinished URL of the topic the post is in (e.g. https://bitcointalk.org/index.php?topic=1)
+            </summary>
+        </member>
+        <member name="M:BitcointalkAPI.Post.#ctor(System.String,BitcointalkAPI.Utilities.WebConfig,BitcointalkAPI.PostParser)">
+            <summary>
+            Creation of a Post object
+            </summary>
+            <param name="postLink">URL of the post</param>
+            <param name="webSettings">Settings for fetching web pages within the Board object</param>
+            <param name="postParser">The object responsible for parsing the HTML of topic / thread pages</param>
+        </member>
+        <member name="M:BitcointalkAPI.Post.#ctor(System.String,System.Int32,BitcointalkAPI.Utilities.WebConfig,BitcointalkAPI.PostParser)">
+            <summary>
+            Creation of a Post object
+            </summary>
+            <param name="topicLink">URL of the topic the post is in</param>
+            <param name="postNumberInTopic">The number of the post within the topic</param>
+            <param name="webSettings">Settings for fetching web pages within the Board object</param>
+            <param name="postParser">The object responsible for parsing the HTML of topic / thread pages</param>
+        </member>
+        <member name="M:BitcointalkAPI.Post.#ctor(System.String,System.String,System.DateTime,BitcointalkAPI.Utilities.WebConfig,BitcointalkAPI.PostParser)">
+            <summary>
+            Creation of a Post object
+            </summary>
+            <param name="topicLink">URL of the topic the post is in</param>
+            <param name="authorLink">The link to the post author's profile</param>
+            <param name="date">The date and time the post was created</param>
+            <param name="webSettings">Settings for fetching web pages within the Board object</param>
+            <param name="postParser">The object responsible for parsing the HTML of topic / thread pages</param>
+        </member>
+        <member name="M:BitcointalkAPI.Post.#ctor(System.String,System.String,System.String,System.String,System.String,System.Int32,System.DateTime,BitcointalkAPI.Utilities.WebConfig,BitcointalkAPI.PostParser)">
+            <summary>
+            Forced creation of a Post object
+            </summary>
+            <param name="postLink">URL of the post</param>
+            <param name="message">The post's message</param>
+            <param name="authorLink">The link to the post author's profile</param>
+            <param name="authorName">The username of the post author</param>
+            <param name="title">The title of the post</param>
+            <param name="numberInTopic">The number of the post within the topic</param>
+            <param name="date">The date and time the post was created</param>
+            <param name="webSettings">Settings for fetching web pages within the Board object</param>
+            <param name="postParser">The object responsible for parsing the HTML of topic / thread pages</param>
+        </member>
+        <member name="M:BitcointalkAPI.Post.#ctor(System.String,System.Int32,System.String,BitcointalkAPI.Utilities.WebConfig,BitcointalkAPI.PostParser)">
+            <summary>
+            
+            </summary>
+            <param name="topicLink">URL of the topic the post is in</param>
+            <param name="postNumberInTopic">The number of the post within the topic</param>
+            <param name="message">The post's message</param>
+            <param name="webSettings">Settings for fetching web pages within the Board object</param>
+            <param name="postParser">The object responsible for parsing the HTML of topic / thread pages</param>
+        </member>
+        <member name="M:BitcointalkAPI.Post.GetMissingData">
+            <summary>
+            Retrieve missing post data from Bitcointalk
+            </summary>
+        </member>
+        <member name="M:BitcointalkAPI.Post.GetMissingDataAsync">
+            <summary>
+            Retrieve missing post data from Bitcointalk asynchronously
+            </summary>
+        </member>
+        <member name="M:BitcointalkAPI.Post.Copy">
+            <summary>
+            Return a semi-deep (except string; doesn't make a difference) copy of a post.
+            </summary>
+            <returns>The copy of the selected Post object</returns>
+        </member>
+        <member name="T:BitcointalkAPI.PostParser">
+            <summary>
+            Utility class meant for parsing Bitcointalk pages. Not meant for direct use.
+            </summary>
+        </member>
+        <member name="E:BitcointalkAPI.PostParser.ScannerFailure">
+            <summary>
+            Event, called every time the processing of Bitcointalk data fails
+            </summary>
+        </member>
+        <member name="F:BitcointalkAPI.PostParser.config">
+            <summary>
+            Settings for fetching web pages within the Board object
+            </summary>
+        </member>
+        <member name="M:BitcointalkAPI.PostParser.#ctor(BitcointalkAPI.Utilities.WebConfig)">
+            <summary>
+            Create a new PostParser object
+            </summary>
+            <param name="config">Settings for fetching web pages within the Board object</param>
+        </member>
+        <member name="M:BitcointalkAPI.PostParser.ParseTopicPage(System.String,System.String)">
+            <summary>
+            Parse a regular topic / thread page
+            </summary>
+            <param name="html">The HTML code of the topic / thread page</param>
+            <param name="smileyReplacer">Text to replace all the smiley emoticons with</param>
+            <returns>A collection of posts from the parsed topic</returns>
+        </member>
+        <member name="M:BitcointalkAPI.PostParser.ParseEntireTopic(System.String,System.String)">
+            <summary>
+            Parse a topic page retrieved via the "print" function
+            </summary>
+            <param name="html">The HTML code of the topic's / thread's "print" page</param>
+            <param name="url">The topic's URL</param>
+            <returns>A collection of posts from the parsed topic</returns>
+        </member>
+        <member name="M:BitcointalkAPI.PostParser.ParseRecentPage(System.String,System.String)">
+            <summary>
+            Parse the "Recent Posts" page
+            </summary>
+            <param name="html">The HTML code of the "Recent Posts" page</param>
+            <param name="smileyReplacer">Text to replace all the smiley emoticons with</param>
+            <returns></returns>
+        </member>
+        <member name="T:BitcointalkAPI.RecentPosts">
+            <summary>
+            Class used for fetching posts from the "Recent Posts" page
+            </summary>
+        </member>
+        <member name="F:BitcointalkAPI.RecentPosts.webSettings">
+            <summary>
+            The settings for fetching web pages
+            </summary>
+        </member>
+        <member name="E:BitcointalkAPI.RecentPosts.PageScanned">
+            <summary>
+            Event, called every time a Bitcointalk page with posts is processed
+            </summary>
+        </member>
+        <member name="E:BitcointalkAPI.RecentPosts.ScanFailure">
+            <summary>
+            Event, called every time the processing of a Bitcointalk page with posts fails
+            </summary>
+        </member>
+        <member name="F:BitcointalkAPI.RecentPosts.restartLimit">
+            <summary>
+            The number of times the RecentPosts class methods should try to retrieve a Bitcointalk page
+            </summary>
+        </member>
+        <member name="M:BitcointalkAPI.RecentPosts.GetAsync(System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Retrieve posts from a selected number of "Recent Posts" page
+            </summary>
+            <param name="pages">Number of pages to collect posts from</param>
+            <param name="cancelToken">Cancellation token, used for ceasing the continued execution of the method</param>
+            <returns>A Task which, once completed, returns a collection of posts from the selected number of "Recent Posts" pages</returns>
+        </member>
+        <member name="T:BitcointalkAPI.Utilities.PageScannedEventArgs`1">
+            <summary>
+            Event arguments for a successful parsing of a Bitcontalk page
+            </summary>
+            <typeparam name="T">The type of elements the Bitcointalk page contains</typeparam>
+        </member>
+        <member name="F:BitcointalkAPI.Utilities.PageScannedEventArgs`1.progress">
+            <summary>
+            The progress of the overall processing of multiple pages
+            </summary>
+        </member>
+        <member name="P:BitcointalkAPI.Utilities.PageScannedEventArgs`1.PageScanned">
+            <summary>
+            The page number of the Bitcointalk page that was parsed
+            </summary>
+        </member>
+        <member name="P:BitcointalkAPI.Utilities.PageScannedEventArgs`1.Progress">
+            <summary>
+            The progress of the overall processing of multiple pages
+            </summary>
+        </member>
+        <member name="P:BitcointalkAPI.Utilities.PageScannedEventArgs`1.ElementsInPage">
+            <summary>
+            The collection of elements within the parsed page
+            </summary>
+        </member>
+        <member name="M:BitcointalkAPI.Utilities.PageScannedEventArgs`1.#ctor(System.Int32,System.Single,System.Collections.Generic.ICollection{`0})">
+            <summary>
+            Create a new PageScannedEvent args object
+            </summary>
+            <param name="pageScanned">The page number of the Bitcointalk page that was parsed</param>
+            <param name="progress">The progress of the overall processing of multiple pages</param>
+            <param name="elementsInPage">The collection of elements within the parsed page</param>
+        </member>
+        <member name="T:BitcointalkAPI.Utilities.ScannerFailureEventArgs">
+            <summary>
+            Event arguments for a failure while parsing Bitcointalk pages
+            </summary>
+        </member>
+        <member name="F:BitcointalkAPI.Utilities.ScannerFailureEventArgs.FailureMessage">
+            <summary>
+            Information about the failure
+            </summary>
+        </member>
+        <member name="M:BitcointalkAPI.Utilities.ScannerFailureEventArgs.#ctor(System.String)">
+            <summary>
+            Create a new ScannerFailureEventArgs object
+            </summary>
+            <param name="failureMessage">Information about the failure</param>
+        </member>
+        <member name="T:BitcointalkAPI.Utilities.InvalidBitcointalkInputException">
+            <summary>
+            Exception class for invalid input provided to a BitcointalkAPI class
+            </summary>
+        </member>
+        <member name="M:BitcointalkAPI.Utilities.InvalidBitcointalkInputException.#ctor">
+            <summary>
+            Create a new InvalidBitcointalkInputException exception with a default message
+            </summary>
+        </member>
+        <member name="M:BitcointalkAPI.Utilities.InvalidBitcointalkInputException.#ctor(System.String,System.Type)">
+            <summary>
+            Create a new InvalidBitcointalkInputException exception
+            </summary>
+            <param name="message">Information about the incorrect input</param>
+            <param name="type">The type of object the input was provided for</param>
+        </member>
+        <member name="T:BitcointalkAPI.Utilities.BitcointalkConnectionException">
+            <summary>
+            Exception class for the inability to establish a connection to the Bitcointalk's servers
+            </summary>
+        </member>
+        <member name="M:BitcointalkAPI.Utilities.BitcointalkConnectionException.#ctor">
+            <summary>
+            Create a new BitcointalkConnectionException exception with a default message
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:BitcointalkAPI.Utilities.BitcointalkConnectionException.#ctor(System.String,System.Type)" -->
+        <member name="T:BitcointalkAPI.Utilities.WebConfig">
+            <summary>
+            Basic configuration struct for adding delays between connection requests to Bitcointalk and basic proxy functionality
+            </summary>
+        </member>
+        <member name="F:BitcointalkAPI.Utilities.WebConfig.requestDelay">
+            <summary>
+            Minimum number of miliseconds between connection request to Bitcointalk
+            </summary>
+        </member>
+        <member name="F:BitcointalkAPI.Utilities.WebConfig.proxyLink">
+            <summary>
+            Proxy URL that should be connected through
+            </summary>
+        </member>
+        <member name="M:BitcointalkAPI.Utilities.WebConfig.#ctor(System.Int32,System.String)">
+            <summary>
+            Create a new WebConfig object
+            </summary>
+            <param name="requestDelay">Minimum number of miliseconds between connection request to Bitcointalk</param>
+            <param name="proxyLink">Proxy URL that should be connected through</param>
+        </member>
+        <member name="T:BitcointalkAPI.Utilities.CancellationTokenExtension">
+            <summary>
+            Ease-of-use extension for invoking exceptions on cancellation
+            </summary>
+        </member>
+        <member name="M:BitcointalkAPI.Utilities.CancellationTokenExtension.CancelIfRequestedAndNotDefault(System.Threading.CancellationToken)">
+            <summary>
+            Invoke cancellation exception if it was requested and the token isn't empty
+            </summary>
+            <param name="token">Cancellation token</param>
+        </member>
+    </members>
+</doc>
