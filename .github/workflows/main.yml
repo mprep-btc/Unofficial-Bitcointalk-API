@@ -5,7 +5,7 @@ name: CI
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
-  push:
+  push:47b505ca6c63d9bc216b235583d5f3c8d486f484345af4542cc8ad7f72e0a722
     branches: [ master ]
   pull_request:
     branches: [ master ]
